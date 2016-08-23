@@ -23,35 +23,35 @@ func apply_function(function: Double->Double, x: matrix) -> matrix{
     return y
 }
 func sin(x: matrix) -> matrix{
-    return apply_function(sin, x)
+    return apply_function(sin, x: x)
 }
 func cos(x: matrix) -> matrix{
-    return apply_function(cos, x)
+    return apply_function(cos, x: x)
 }
 func tan(x: matrix) -> matrix{
-    return apply_function(tan, x)
+    return apply_function(tan, x: x)
 }
 /// log_e(.)
 func log(x: matrix) -> matrix{
-    var y = apply_function(log, x)
+    let y = apply_function(log, x: x)
     return y
 }
 func abs(x: matrix) -> matrix{
-    return apply_function(abs, x)
+    return apply_function(abs, x: x)
 }
 func sqrt(x: matrix) -> matrix{
-    var y = apply_function(sqrt, x)
+    let y = apply_function(sqrt, x: x)
     return y
 }
 func round(x: matrix) -> matrix{
-    return apply_function(round, x)
+    return apply_function(round, x: x)
 }
 func floor(x: matrix) -> matrix{
-    var y = apply_function(floor, x)
+    let y = apply_function(floor, x: x)
     return y
 }
 func ceil(x: matrix) -> matrix{
-    var y = apply_function(ceil, x)
+    let y = apply_function(ceil, x: x)
     return y
 }
 func sign(x: Double) -> Double{
@@ -62,7 +62,7 @@ func sign(x: Double) -> Double{
     }
 }
 func sign(x: matrix)->matrix{
-    return apply_function(sign, x)
+    return apply_function(sign, x: x)
 }
 func pow(x: matrix, power: Double) -> matrix{
     var y = zeros(x.count)
@@ -72,7 +72,7 @@ func pow(x: matrix, power: Double) -> matrix{
     return y
 }
 func sum(x: matrix) -> Double{
-    var y = zeros(x.count)
+    _ = zeros(x.count)
     var s: Double = 0
     for i in 0..<x.count{
         s = x[i] + s
@@ -80,23 +80,23 @@ func sum(x: matrix) -> Double{
     return s
 }
 func avg(x: matrix) -> Double{
-    var y: Double = sum(x)
+    let y: Double = sum(x)
     
     return y / x.count.double
 }
 func std(x: matrix) -> Double{
-    var y: Double = avg(x)
-    var z = x - y
-    return sqrt(sum(pow(z, 2) / x.count.double))
+    let y: Double = avg(x)
+    let z = x - y
+    return sqrt(sum(pow(z, power: 2) / x.count.double))
 }
 /// variance used since var is a keyword
 func variance(x: matrix) -> Double{
-    var y: Double = avg(x)
-    var z = x - y
-    return sum(pow(z, 2) / x.count.double)
+    let y: Double = avg(x)
+    let z = x - y
+    return sum(pow(z, power: 2) / x.count.double)
 }
 func norm(x: matrix, type:String="l2") -> Double{
-    if type=="l2"{ return sqrt(sum(pow(x, 2)))}
+    if type=="l2"{ return sqrt(sum(pow(x, power: 2)))}
     if type=="l1"{ return sum(abs(x))}
     if type=="l0"{
         var count = 0.0
@@ -132,9 +132,9 @@ func rand(N: Int) -> matrix{
     return x
 }
 func randn() -> Double{
-    var u:Double = rand()
-    var v:Double = rand()
-    var x = sqrt(-2*log(u))*cos(2*pi*v);
+    let u:Double = rand()
+    let v:Double = rand()
+    let x = sqrt(-2*log(u))*cos(2*pi*v);
     return x
 }
 func randn(N: Int, mean: Double=0, sigma: Double=1) -> matrix{
@@ -142,20 +142,20 @@ func randn(N: Int, mean: Double=0, sigma: Double=1) -> matrix{
     for i in 0..<N{
         x[i] = randn()
     }
-    var y = (x * sigma) + mean;
+    let y = (x * sigma) + mean;
     return y
 }
 func min(x: matrix, absValue:Bool=false) -> Double{
     // absValue not implemeted yet
-    var min = inf
-    var xP = matrixToPointer(x)
-    var minC = min_objc(xP, x.n.cint)
+    _ = inf
+    let xP = matrixToPointer(x)
+    let minC = min_objc(xP, x.n.cint)
     return minC
 }
 func max(x: matrix, absValue:Bool=false) -> Double{
     // absValue not implemeted yet
-    var xP = matrixToPointer(x)
-    var maxC = max_objc(xP, x.n.cint);
+    let xP = matrixToPointer(x)
+    let maxC = max_objc(xP, x.n.cint);
     return maxC
 }
 

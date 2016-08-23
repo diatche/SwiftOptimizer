@@ -16,9 +16,9 @@ import Accelerate
 func toArray(seq: Range<Int>) -> matrix {
     // improve with [1]
     // [1]:https://gist.github.com/nubbel/d5a3639bea96ad568cf2
-    var start:Double = seq.startIndex.double * 1.0
-    var end:Double   = seq.endIndex.double * 1.0
-    var s = arange(start, end, x:true)
+    let start:Double = seq.startIndex.double * 1.0
+    let end:Double   = seq.endIndex.double * 1.0
+    let s = arange(start, max: end, x:true)
     return s
 }
 
@@ -55,13 +55,13 @@ struct matrix {
     subscript(r: matrix) -> matrix {
         get {
             //assert((r%1.0) ~== zeros_like(r))
-            var y = zeros(r.n)
+            let y = zeros(r.n)
             index_objc(!self, !y, !r, r.n.cint)
             return y
         }
         set {
             //assert((r % 1.0) ~== zeros_like(r))
-            var j = 0
+            _ = 0
             // FOR LOOP in C
             // asked stackoverflow question at [1]
             // [1]:http://stackoverflow.com/questions/24727674/modify-select-elements-of-an-array
@@ -101,19 +101,19 @@ func zeros_like(x: matrix) -> matrix{
 /// argwhere(x < 2) or argwhere(x < y) works as more or less as expected. returns an array of type double (bug, todo)
 func argwhere(idx: matrix) -> matrix{
     // counts non-zero elements, return array of doubles (which can be indexed!).
-    var i = arange(idx.n)
-    var sum = sum_objc(!idx, idx.n.cint)
-    var args = zeros(Int(sum))
+    let i = arange(Double(idx.n))
+    let sum = sum_objc(!idx, idx.n.cint)
+    let args = zeros(Int(sum))
     find_objc(!idx, !args, !i, idx.n.cint)
     return args
 }
 
 // RANGE. | for exclusive range, ! for inclusive range. | chosen for similiarity with Python, ! chosen because ! has a dot, closer to ...
-operator infix | {associativity none precedence 140}
+infix operator | {associativity none precedence 140}
 func | (lhs: Int, rhs: Int) -> Range<Int>{
     return lhs..<rhs
 }
-operator infix ! {associativity none precedence 140}
+infix operator ! {associativity none precedence 140}
 func ! (lhs: Int, rhs: Int) -> Range<Int>{
     return lhs...rhs
 }

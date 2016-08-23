@@ -24,7 +24,7 @@ class ArmijoLineSearch : LineSearch {
     }
     
     override func search(inout problem: Problem, inout endCriteriaType: EndCriteriaType, endCriteria: EndCriteria, initialValue: Double) -> Double {
-        var constraint = problem.constraint
+        let constraint = problem.constraint
         succeed = true
         
         var maxIter = false
@@ -32,8 +32,8 @@ class ArmijoLineSearch : LineSearch {
         var t = initialValue
         var loopNumber = 0
         
-        var q0 : Double = problem.functionValue
-        var qp0 : Double = problem.squaredNorm
+        let q0 : Double = problem.functionValue
+        let qp0 : Double = problem.squaredNorm
         
         qt = q0
         
@@ -51,8 +51,8 @@ class ArmijoLineSearch : LineSearch {
         
         if qt - q0 > (-alpha * t * qpt) {
             
-            do {
-                loopNumber++
+            repeat {
+                loopNumber += 1
                 t *= beta
                 qtold = qt
                 xtd = problem.currentValue

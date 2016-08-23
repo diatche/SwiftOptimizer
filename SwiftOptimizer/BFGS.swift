@@ -15,7 +15,7 @@ class BFGS : LineSearchBasedMethod {
     
     var inverseHessian : matrix2d
     
-    init(lineSearch: LineSearch = ArmijoLineSearch()) {
+    override init(lineSearch: LineSearch = ArmijoLineSearch()) {
         inverseHessian = matrix2d(columns: 0, rows: 0)
         super.init(lineSearch : lineSearch)
     }

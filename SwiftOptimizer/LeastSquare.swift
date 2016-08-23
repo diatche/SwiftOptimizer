@@ -39,7 +39,7 @@ class LeastSquareFunction : CostFunction {
         var fct2fit = zeros(leastSquareProblem.size())
         
         leastSquareProblem.targetAndValue(parameters, target: &target, fct2fit: &fct2fit)
-        var diff = target - fct2fit
+        let diff = target - fct2fit
         return diff *! diff
     }
     
@@ -48,7 +48,7 @@ class LeastSquareFunction : CostFunction {
         var fct2fit = zeros(leastSquareProblem.size())
         
         leastSquareProblem.targetAndValue(parameters, target: &target, fct2fit: &fct2fit)
-        var diff = target - fct2fit
+        let diff = target - fct2fit
         return diff * diff //@ need to check this
 
     }
@@ -60,7 +60,7 @@ class LeastSquareFunction : CostFunction {
         
         leastSquareProblem.targetValueAndGradient(parameters, grad_fct2fit: &grad_fct2fit, target: &target, fct2fit: &fct2fit)
         
-        var diff = target - fct2fit
+        _ = target - fct2fit
 
     }
     

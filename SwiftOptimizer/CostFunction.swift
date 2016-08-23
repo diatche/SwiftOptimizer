@@ -31,7 +31,7 @@ class CostFunction {
     }
     
     func gradient(inout grad : matrix, parameters : matrix) {
-        var eps = finiteDifferenceEpsilon()
+        let eps = finiteDifferenceEpsilon()
         var fp : Double, fm : Double
         var xx = parameters
         

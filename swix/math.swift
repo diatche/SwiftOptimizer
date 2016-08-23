@@ -14,7 +14,7 @@ func dot(x: matrix2d, y: matrix2d) -> matrix2d{
     var (Mx, Nx) = x.shape
     var (My, Ny) = y.shape
     assert(Nx == My, "Matrix sizes not compatible for dot product")
-    var z = zeros((Mx, Ny))
+    let z = zeros((Mx, Ny))
     
     dot_objc(!x, !y, !z, Mx.cint, Ny.cint, Nx.cint)
     
@@ -23,16 +23,16 @@ func dot(x: matrix2d, y: matrix2d) -> matrix2d{
 
 
 func fft(x: matrix) -> (matrix, matrix){
-    var N:CInt = x.n.cint
-    var yr = zeros(N.int)
-    var yi = zeros(N.int)
+    let N:CInt = x.n.cint
+    let yr = zeros(N.int)
+    let yi = zeros(N.int)
     fft_objc(!x, N, !yr, !yi);
     
     return (yr, yi)
 }
 func ifft(yr: matrix, yi: matrix) -> matrix{
-    var N = yr.n
-    var x = zeros(N)
+    let N = yr.n
+    let x = zeros(N)
     ifft_objc(!yr, !yi, N.cint, !x);
 
     return x

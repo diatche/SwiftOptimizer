@@ -10,40 +10,40 @@ import Foundation
 import Accelerate
 
 func apply_function(function: matrix->matrix, x: matrix2d)->matrix2d{
-    var y = function(x.flat)
+    let y = function(x.flat)
     var z = zeros_like(x)
     z.flat = y
     return z
 }
 func sin(x: matrix2d) -> matrix2d{
-    return apply_function(sin, x)
+    return apply_function(sin, x: x)
 }
 func cos(x: matrix2d) -> matrix2d{
-    return apply_function(cos, x)
+    return apply_function(cos, x: x)
 }
 func tan(x: matrix2d) -> matrix2d{
-    return apply_function(tan, x)
+    return apply_function(tan, x: x)
 }
 func log(x: matrix2d) -> matrix2d{
-    return apply_function(log, x)
+    return apply_function(log, x: x)
 }
 func abs(x: matrix2d) -> matrix2d{
-    return apply_function(abs, x)
+    return apply_function(abs, x: x)
 }
 func sqrt(x: matrix2d) -> matrix2d{
-    return apply_function(sqrt, x)
+    return apply_function(sqrt, x: x)
 }
 func floor(x: matrix2d) -> matrix2d{
-    return apply_function(floor, x)
+    return apply_function(floor, x: x)
 }
 func ceil(x: matrix2d) -> matrix2d{
-    return apply_function(ceil, x)
+    return apply_function(ceil, x: x)
 }
 func round(x: matrix2d) -> matrix2d{
-    return apply_function(round, x)
+    return apply_function(round, x: x)
 }
 func sign(x: matrix2d) -> matrix2d{
-    var y = apply_function(sign, x.flat)
+    let y = apply_function(sign, x: x.flat)
     var z = zeros_like(x)
     z.flat = y
     return z
@@ -53,7 +53,7 @@ func randn(N: (Int, Int), mean: Double=0, sigma: Double=1) -> matrix2d{
     for i in 0..<x.n{
         x.flat[i] = randn()
     }
-    var y = (x * sigma) + mean;
+    let y = (x * sigma) + mean;
     return y
 }
 func rand(N: (Int, Int)) -> matrix2d{
@@ -64,7 +64,7 @@ func rand(N: (Int, Int)) -> matrix2d{
     return x
 }
 func pow(x: matrix2d, power: Double) -> matrix2d{
-    var y = pow(x.flat, power)
+    let y = pow(x.flat, power: power)
     var z = zeros_like(x)
     z.flat = y
     return z

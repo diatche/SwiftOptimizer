@@ -23,7 +23,7 @@ class LineSearchBasedMethod : OptimizationMethod {
     
     func minimize(inout problem: Problem, endCriteria: EndCriteria) -> EndCriteriaType {
         // Initializations
-        var ftol = endCriteria.functionEpsilon
+        let ftol = endCriteria.functionEpsilon
         var maxStationaryStateIterations_ = endCriteria.maxStationaryStateIterations
         var ecType = EndCriteriaType.None
         problem.reset()                                      // reset problem
@@ -45,10 +45,10 @@ class LineSearchBasedMethod : OptimizationMethod {
         var t = 1.0
         // Set gradient g at the size of the optimization problem
         // search direction
-        var sz = lineSearch.searchDirection.count
+        let sz = lineSearch.searchDirection.count
         
         var prevGradient = zeros(sz)
-        var d = zeros(sz)
+        _ = zeros(sz)
         var sddiff = zeros(sz)
         var direction = zeros(sz)
         
@@ -59,7 +59,7 @@ class LineSearchBasedMethod : OptimizationMethod {
         
         var first_time = true
         // Loop over iterations
-        do {
+        repeat {
             // Linesearch
             if (!first_time) {
                 prevGradient = lineSearch.lastGradient()
@@ -101,7 +101,7 @@ class LineSearchBasedMethod : OptimizationMethod {
                         return ecType
                 }
                 problem.currentValue = x_      // update problem current value
-                iterationNumber_++         // Increase iteration number
+                iterationNumber_ += 1         // Increase iteration number
                 first_time = false
             } else {
                 done = true

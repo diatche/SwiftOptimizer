@@ -51,7 +51,7 @@ class LineSearch {
         while !valid {
             assert (icount <= 200, "Can't update linesearch!")
             diff *= 0.5
-            icount++
+            icount += 1
             newParams = parameters + diff * direction
             valid = constraint.test(newParams)
         }

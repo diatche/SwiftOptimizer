@@ -20,7 +20,7 @@ using namespace cv;
 void matToPointer(Mat x, double * y, int N);
 void copy(Mat x, double * y, int N);
 @implementation CVWrapper
-+ (void) repeat:(double *)x to:(double*)y n_x:(int)n_x n_repeat:(int)n_repeat{
++ (void) repeated:(double *)x to:(double*)y n_x:(int)n_x n_repeat:(int)n_repeat{
     Mat xMat(n_x, 1, CV_64F, x);
     Mat yMat(n_x*n_repeat, 1, CV_64F, y);
     repeat(xMat, 1, n_repeat, yMat);

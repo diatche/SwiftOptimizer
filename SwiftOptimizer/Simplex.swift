@@ -27,10 +27,10 @@ class Simplex : OptimizationMethod {
     
     func extrapolate(problem : Problem, iHighest : Int, inout factor : Double) -> Double {
         var pTry : matrix
-        do {
-            var dimensions = values.count - 1
-            var factor1 = (1.0 - factor) / Double(dimensions)
-            var factor2 = factor1 - factor
+        repeat {
+            let dimensions = values.count - 1
+            let factor1 = (1.0 - factor) / Double(dimensions)
+            let factor2 = factor1 - factor
             pTry = sum_ * factor1 - vertices[iHighest] * factor2
             factor *= 0.5
         
@@ -41,7 +41,7 @@ class Simplex : OptimizationMethod {
         }
         
         factor *= 2.0
-        var vTry : Double = problem.value(pTry)
+        let vTry : Double = problem.value(pTry)
         if (vTry < values[iHighest]) {
             values[iHighest] = vTry
             sum_ = sum_ + pTry - vertices[iHighest]
@@ -53,7 +53,7 @@ class Simplex : OptimizationMethod {
     
     
     func minimize(inout problem: Problem, endCriteria: EndCriteria) -> EndCriteriaType {
-        var xtol = endCriteria.rootEpsilon
+        let xtol = endCriteria.rootEpsilon
         var maxStationaryStateIterations = endCriteria.maxStationaryStateIterations
         var ecType = EndCriteriaType.None
         problem.reset()
@@ -61,9 +61,9 @@ class Simplex : OptimizationMethod {
         var x_ = problem.currentValue
         var iterationNumber = 0
         
-        var end = false
-        var n = x_.count
-        var i : Int
+        let end = false
+        let n = x_.count
+        var _ : Int
         
         vertices = [matrix](count : n + 1, repeatedValue : x_)
         for i in 0..<n {
@@ -78,7 +78,7 @@ class Simplex : OptimizationMethod {
             values[i] = problem.value(vertices[i])
         }
         
-        do {
+        repeat {
             sum_ = zeros(n);
             for i in 0...n {
                 sum_ = sum_ + vertices[i];
@@ -113,14 +113,14 @@ class Simplex : OptimizationMethod {
                 }
             }
 
-            var simplexSize = computeSimplexSize(vertices)
-            iterationNumber++
+            let simplexSize = computeSimplexSize(vertices)
+            iterationNumber += 1
 
             if (simplexSize < xtol || endCriteria.checkMaxIterations(iterationNumber, endCriteriaType: &ecType)) {
                 endCriteria.checkStationaryPoint(0.0, xNew: 0.0, stationaryStateIterations: &maxStationaryStateIterations, endCriteriaType: &ecType)
                     endCriteria.checkMaxIterations(iterationNumber, endCriteriaType: &ecType)
                     x_ = vertices[iLowest]
-                    var low = values[iLowest]
+                    let low = values[iLowest]
                     problem.functionValue = low
                     problem.currentValue = x_
                     return ecType;
@@ -136,7 +136,7 @@ class Simplex : OptimizationMethod {
             }
             else if (abs(factor) > 1e-100) {
                 if (vTry >= values[iNextHighest]) {
-                    var vSave = values[iHighest];
+                    let vSave = values[iHighest];
                     factor = 0.5
                     vTry = extrapolate(problem, iHighest: iHighest, factor: &factor);
                     if vTry >= vSave && abs(factor) > 1e-100 {
@@ -154,7 +154,7 @@ class Simplex : OptimizationMethod {
             // If can't extrapolate given the constraints, exit
             if abs(factor) <= 1e-100 {
                 x_ = vertices[iLowest]
-                var low = values[iLowest]
+                let low = values[iLowest]
                 problem.functionValue = low
                 problem.currentValue = x_
                 return EndCriteriaType.StationaryFunctionValue
@@ -179,7 +179,7 @@ func computeSimplexSize(vertices : [matrix]) -> Double {
     
     var result = 0.0
     for i in 0..<(vertices.count) {
-        var temp = vertices[i] - center
+        let temp = vertices[i] - center
         result += sqrt(temp *! temp)
     }
     

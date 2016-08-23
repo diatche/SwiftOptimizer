@@ -36,23 +36,23 @@ class Problem {
     }
     
     func value(parameters : matrix) -> Double {
-        functionEvaluation++
+        functionEvaluation += 1
         return costFunction.value(parameters)
     }
     
     func values(parameters : matrix) -> matrix {
-        functionEvaluation++
+        functionEvaluation += 1
         return costFunction.values(parameters)
     }
     
     func gradient(inout grad : matrix, parameters : matrix) {
-        gradientEvaluation++
+        gradientEvaluation += 1
         costFunction.gradient(&grad, parameters: parameters)
     }
     
     func valueAndGradient(inout grad : matrix, parameters : matrix) -> Double {
-        functionEvaluation++
-        gradientEvaluation++
+        functionEvaluation += 1
+        gradientEvaluation += 1
         return costFunction.valueAndGradient(&grad, parameters: parameters)
     }
     

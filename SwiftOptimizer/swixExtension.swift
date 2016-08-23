@@ -8,7 +8,7 @@
 
 import Foundation
 
-@infix func *! (vector1 : matrix, vector2 : matrix) -> Double {
+func *! (vector1 : matrix, vector2 : matrix) -> Double {
     
     // I think swix will implement this, but doesn't seem to be working right no
     // convert to accelerate?

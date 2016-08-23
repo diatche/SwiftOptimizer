@@ -1,5 +1,5 @@
 //
-//  twoD-operators.swift
+//  twoD-ops.swift
 //  swix
 //
 //  Created by Scott Sievert on 7/9/14.
@@ -9,133 +9,133 @@
 import Foundation
 import Accelerate
 
-func make_operator(lhs: matrix2d, operator: String, rhs: matrix2d)->matrix2d{
+func make_operator(lhs: matrix2d, op: String, rhs: matrix2d)->matrix2d{
     assert(lhs.shape.0 == rhs.shape.0, "Sizes must match!")
     assert(lhs.shape.1 == rhs.shape.1, "Sizes must match!")
     
     var result = zeros_like(lhs) // real result
-    var lhsM = lhs.flat
-    var rhsM = rhs.flat
+    let lhsM = lhs.flat
+    let rhsM = rhs.flat
     var resM:matrix = zeros_like(lhsM) // flat matrix
-    if operator=="+" {resM = lhsM + rhsM}
-    else if operator=="-" {resM = lhsM - rhsM}
-    else if operator=="*" {resM = lhsM * rhsM}
-    else if operator=="/" {resM = lhsM / rhsM}
-    else if operator=="<" {resM = lhsM < rhsM}
-    else if operator==">" {resM = lhsM > rhsM}
-    else if operator==">=" {resM = lhsM >= rhsM}
-    else if operator=="<=" {resM = lhsM <= rhsM}
+    if op=="+" {resM = lhsM + rhsM}
+    else if op=="-" {resM = lhsM - rhsM}
+    else if op=="*" {resM = lhsM * rhsM}
+    else if op=="/" {resM = lhsM / rhsM}
+    else if op=="<" {resM = lhsM < rhsM}
+    else if op==">" {resM = lhsM > rhsM}
+    else if op==">=" {resM = lhsM >= rhsM}
+    else if op=="<=" {resM = lhsM <= rhsM}
     result.flat.grid = resM.grid
     return result
 }
-func make_operator(lhs: matrix2d, operator: String, rhs: Double)->matrix2d{
+func make_operator(lhs: matrix2d, op: String, rhs: Double)->matrix2d{
     var result = zeros_like(lhs) // real result
 //    var lhsM = asmatrix(lhs.grid) // flat
-    var lhsM = lhs.flat
+    let lhsM = lhs.flat
     var resM:matrix = zeros_like(lhsM) // flat matrix
-    if operator=="+" {resM = lhsM + rhs}
-    else if operator=="-" {resM = lhsM - rhs}
-    else if operator=="*" {resM = lhsM * rhs}
-    else if operator=="/" {resM = lhsM / rhs}
-    else if operator=="<" {resM = lhsM < rhs}
-    else if operator==">" {resM = lhsM > rhs}
-    else if operator==">=" {resM = lhsM >= rhs}
-    else if operator=="<=" {resM = lhsM <= rhs}
+    if op=="+" {resM = lhsM + rhs}
+    else if op=="-" {resM = lhsM - rhs}
+    else if op=="*" {resM = lhsM * rhs}
+    else if op=="/" {resM = lhsM / rhs}
+    else if op=="<" {resM = lhsM < rhs}
+    else if op==">" {resM = lhsM > rhs}
+    else if op==">=" {resM = lhsM >= rhs}
+    else if op=="<=" {resM = lhsM <= rhs}
     result.flat.grid = resM.grid
     return result
 }
-func make_operator(lhs: Double, operator: String, rhs: matrix2d)->matrix2d{
+func make_operator(lhs: Double, op: String, rhs: matrix2d)->matrix2d{
     var result = zeros_like(rhs) // real result
 //    var rhsM = asmatrix(rhs.grid) // flat
-    var rhsM = rhs.flat
+    let rhsM = rhs.flat
     var resM:matrix = zeros_like(rhsM) // flat matrix
-    if operator=="+" {resM = lhs + rhsM}
-    else if operator=="-" {resM = lhs - rhsM}
-    else if operator=="*" {resM = lhs * rhsM}
-    else if operator=="/" {resM = lhs / rhsM}
-    else if operator=="<" {resM = lhs < rhsM}
-    else if operator==">" {resM = lhs > rhsM}
-    else if operator==">=" {resM = lhs >= rhsM}
-    else if operator=="<=" {resM = lhs <= rhsM}
+    if op=="+" {resM = lhs + rhsM}
+    else if op=="-" {resM = lhs - rhsM}
+    else if op=="*" {resM = lhs * rhsM}
+    else if op=="/" {resM = lhs / rhsM}
+    else if op=="<" {resM = lhs < rhsM}
+    else if op==">" {resM = lhs > rhsM}
+    else if op==">=" {resM = lhs >= rhsM}
+    else if op=="<=" {resM = lhs <= rhsM}
     result.flat.grid = resM.grid
     return result
 }
 
 // DOT PRODUCT
-operator infix *! {associativity none precedence 140}
+infix operator *! {associativity none precedence 140}
 func *! (lhs: matrix2d, rhs: matrix2d) -> matrix2d{
-    return dot(lhs, rhs)}
+    return dot(lhs, y: rhs)}
 // SOLVE
-operator infix !/ {associativity none precedence 140}
+infix operator !/ {associativity none precedence 140}
 func !/ (lhs: matrix2d, rhs: matrix) -> matrix{
-    return solve(lhs, rhs)}
+    return solve(lhs, b: rhs)}
 // EQUALITY
 func ~== (lhs: matrix2d, rhs: matrix2d) -> Bool{
     return (rhs.flat ~== lhs.flat)}
 
 /// ELEMENT WISE OPERATORS
 // PLUS
-operator infix + {associativity none precedence 140}
+infix operator + {associativity none precedence 140}
 func + (lhs: matrix2d, rhs: matrix2d) -> matrix2d{
-    return make_operator(lhs, "+", rhs)}
+    return make_operator(lhs, op: "+", rhs: rhs)}
 func + (lhs: Double, rhs: matrix2d) -> matrix2d{
-    return make_operator(lhs, "+", rhs)}
+    return make_operator(lhs, op: "+", rhs: rhs)}
 func + (lhs: matrix2d, rhs: Double) -> matrix2d{
-    return make_operator(lhs, "+", rhs)}
+    return make_operator(lhs, op: "+", rhs: rhs)}
 // MINUS
-operator infix - {associativity none precedence 140}
+infix operator - {associativity none precedence 140}
 func - (lhs: matrix2d, rhs: matrix2d) -> matrix2d{
-    return make_operator(lhs, "-", rhs)}
+    return make_operator(lhs, op: "-", rhs: rhs)}
 func - (lhs: Double, rhs: matrix2d) -> matrix2d{
-    return make_operator(lhs, "-", rhs)}
+    return make_operator(lhs, op: "-", rhs: rhs)}
 func - (lhs: matrix2d, rhs: Double) -> matrix2d{
-    return make_operator(lhs, "-", rhs)}
+    return make_operator(lhs, op: "-", rhs: rhs)}
 // TIMES
-operator infix * {associativity none precedence 140}
+infix operator * {associativity none precedence 140}
 func * (lhs: matrix2d, rhs: matrix2d) -> matrix2d{
-    return make_operator(lhs, "*", rhs)}
+    return make_operator(lhs, op: "*", rhs: rhs)}
 func * (lhs: Double, rhs: matrix2d) -> matrix2d{
-    return make_operator(lhs, "*", rhs)}
+    return make_operator(lhs, op: "*", rhs: rhs)}
 func * (lhs: matrix2d, rhs: Double) -> matrix2d{
-    return make_operator(lhs, "*", rhs)}
+    return make_operator(lhs, op: "*", rhs: rhs)}
 // DIVIDE
-operator infix / {associativity none precedence 140}
+infix operator / {associativity none precedence 140}
 func / (lhs: matrix2d, rhs: matrix2d) -> matrix2d{
-    return make_operator(lhs, "/", rhs)
+    return make_operator(lhs, op: "/", rhs: rhs)
 }
 func / (lhs: Double, rhs: matrix2d) -> matrix2d{
-    return make_operator(lhs, "/", rhs)}
+    return make_operator(lhs, op: "/", rhs: rhs)}
 func / (lhs: matrix2d, rhs: Double) -> matrix2d{
-    return make_operator(lhs, "/", rhs)}
+    return make_operator(lhs, op: "/", rhs: rhs)}
 // LESS THAN
-operator infix < {associativity none precedence 140}
+infix operator < {associativity none precedence 140}
 func < (lhs: matrix2d, rhs: Double) -> matrix2d{
-    return make_operator(lhs, "<", rhs)}
+    return make_operator(lhs, op: "<", rhs: rhs)}
 func < (lhs: matrix2d, rhs: matrix2d) -> matrix2d{
-    return make_operator(lhs, "<", rhs)}
+    return make_operator(lhs, op: "<", rhs: rhs)}
 func < (lhs: Double, rhs: matrix2d) -> matrix2d{
-    return make_operator(lhs, "<", rhs)}
+    return make_operator(lhs, op: "<", rhs: rhs)}
 // GREATER THAN
-operator infix > {associativity none precedence 140}
+infix operator > {associativity none precedence 140}
 func > (lhs: matrix2d, rhs: Double) -> matrix2d{
-    return make_operator(lhs, ">", rhs)}
+    return make_operator(lhs, op: ">", rhs: rhs)}
 func > (lhs: matrix2d, rhs: matrix2d) -> matrix2d{
-    return make_operator(lhs, ">", rhs)}
+    return make_operator(lhs, op: ">", rhs: rhs)}
 func > (lhs: Double, rhs: matrix2d) -> matrix2d{
-    return make_operator(lhs, ">", rhs)}
+    return make_operator(lhs, op: ">", rhs: rhs)}
 // GREATER THAN OR EQUAL
-operator infix >= {associativity none precedence 140}
+infix operator >= {associativity none precedence 140}
 func >= (lhs: matrix2d, rhs: Double) -> matrix2d{
-    return make_operator(lhs, "=>", rhs)}
+    return make_operator(lhs, op: "=>", rhs: rhs)}
 func >= (lhs: matrix2d, rhs: matrix2d) -> matrix2d{
-    return make_operator(lhs, "=>", rhs)}
+    return make_operator(lhs, op: "=>", rhs: rhs)}
 func >= (lhs: Double, rhs: matrix2d) -> matrix2d{
-    return make_operator(lhs, "=>", rhs)}
+    return make_operator(lhs, op: "=>", rhs: rhs)}
 // LESS THAN OR EQUAL
-operator infix <= {associativity none precedence 140}
+infix operator <= {associativity none precedence 140}
 func <= (lhs: matrix2d, rhs: Double) -> matrix2d{
-    return make_operator(lhs, "=>", rhs)}
+    return make_operator(lhs, op: "=>", rhs: rhs)}
 func <= (lhs: matrix2d, rhs: matrix2d) -> matrix2d{
-    return make_operator(lhs, "=>", rhs)}
+    return make_operator(lhs, op: "=>", rhs: rhs)}
 func <= (lhs: Double, rhs: matrix2d) -> matrix2d{
-    return make_operator(lhs, "=>", rhs)}
+    return make_operator(lhs, op: "=>", rhs: rhs)}

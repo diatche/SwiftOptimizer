@@ -55,7 +55,7 @@ class EndCriteria {
             stationaryStateIterations = 0
             return false
         }
-        stationaryStateIterations++
+        stationaryStateIterations += 1
         if (stationaryStateIterations <= maxStationaryStateIterations) {
             return false
         }
@@ -70,7 +70,7 @@ class EndCriteria {
             stationaryStateIterations = 0
             return false
         }
-        stationaryStateIterations++
+        stationaryStateIterations += 1
         if stationaryStateIterations <= maxStationaryStateIterations {
             return false
         }

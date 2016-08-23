@@ -18,24 +18,24 @@ func ones(N: Int) -> matrix{
     return matrix(n: N)+1
 }
 func arange(max: Double, x exclusive:Bool = true) -> matrix{
-    var x = arange(0, max, x:exclusive)
+    let x = arange(0, max: max, x:exclusive)
     return x
 }
 func arange(min: Double, max: Double, x exclusive: Bool = true) -> matrix{
     var pad = 0
     if !exclusive {pad = 1}
     let N = max.int - min.int + pad
-    var x = zeros(N)
-    var xP = matrixToPointer(x)
-    var minP = CDouble(min)
+    let x = zeros(N)
+    let xP = matrixToPointer(x)
+    let minP = CDouble(min)
     
     linspace_objc(xP, (N+pad).cint, (minP), 1.0)
     return x
 }
 func linspace(min: Double, max: Double, num: Int=50) -> matrix{
-    var x = zeros(num+1)
-    var xP = matrixToPointer(x)
-    linspace_objc(xP, num.cint, min.cdouble, ((max-min)/num).double)
+    let x = zeros(num+1)
+    let xP = matrixToPointer(x)
+    linspace_objc(xP, num.cint, min.cdouble, ((max-min)/Double(num)).double)
     return x
 }
 func array(numbers: Double...) -> matrix{
@@ -43,15 +43,15 @@ func array(numbers: Double...) -> matrix{
     var i = 0
     for number in numbers{
         x[i] = number
-        i++
+        i += 1
     }
     return x
 }
-func repeat(x: matrix, N:Int, how:String="matrix") -> matrix{
-    var y = zeros(x.n * N)
-    var xP = matrixToPointer(x)
-    var yP = matrixToPointer(y)
-    CVWrapper.repeat(!x, to:!y, n_x:x.n.cint, n_repeat:N.cint)
+func repeated(x: matrix, N:Int, how:String="matrix") -> matrix{
+    let y = zeros(x.n * N)
+    _ = matrixToPointer(x)
+    _ = matrixToPointer(y)
+    CVWrapper.repeated(!x, to:!y, n_x:x.n.cint, n_repeat:N.cint)
     var z = zeros((x.n, N))
     z.flat = y
     if how=="matrix" {z = transpose(z)}

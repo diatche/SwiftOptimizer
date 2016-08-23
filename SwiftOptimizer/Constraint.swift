@@ -36,7 +36,7 @@ class Constraint {
         while !valid {
             assert(icount <= 200, "#Can't update parameter vector!")
             diff *= 0.5
-            icount++
+            icount += 1
             newParams = parameters + diff * direction
             valid = test(newParams)
         }
