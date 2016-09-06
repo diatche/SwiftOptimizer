@@ -11,8 +11,8 @@ import Accelerate
 
 // fft, ifft, dot product, haar wavelet
 func dot(x: matrix2d, y: matrix2d) -> matrix2d{
-    var (Mx, Nx) = x.shape
-    var (My, Ny) = y.shape
+    let (Mx, Nx) = x.shape
+    let (My, Ny) = y.shape
     assert(Nx == My, "Matrix sizes not compatible for dot product")
     let z = zeros((Mx, Ny))
     

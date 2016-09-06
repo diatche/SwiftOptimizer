@@ -49,7 +49,6 @@ class LineSearchBasedMethod : OptimizationMethod {
         
         var prevGradient = zeros(sz)
         _ = zeros(sz)
-        var sddiff = zeros(sz)
         var direction = zeros(sz)
         
         // Initialize cost function, gradient prevGradient and search direction
@@ -86,7 +85,7 @@ class LineSearchBasedMethod : OptimizationMethod {
                 // conjugate gradient search direction
                 direction = getUpdatedDirection(&problem, gold2: gold2, gradient: prevGradient);
                 
-                sddiff = direction - lineSearch.searchDirection
+                _ = direction - lineSearch.searchDirection
                 lineSearch.searchDirection = direction
                 
                 // Now compute accuracy and check end criteria

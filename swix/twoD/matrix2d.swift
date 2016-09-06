@@ -52,7 +52,7 @@ struct matrix2d {
         get {
             let rr = toArray(r)
             let cc = toArray(c)
-            var (j, i) = meshgrid(rr, y: cc)
+            let (j, i) = meshgrid(rr, y: cc)
             let idx = (j.flat*columns.double + i.flat)
             let z = flat[idx]
             let zz = reshape(z, shape: (rr.n, cc.n))
@@ -61,21 +61,21 @@ struct matrix2d {
         set {
             let rr = toArray(r)
             let cc = toArray(c)
-            var (j, i) = meshgrid(rr, y: cc)
+            let (j, i) = meshgrid(rr, y: cc)
             let idx = j.flat*columns.double + i.flat
             flat[idx] = newValue.flat
         }
     }
     subscript(r: matrix, c: matrix) -> matrix2d {
         get {
-            var (j, i) = meshgrid(r, y: c)
+            let (j, i) = meshgrid(r, y: c)
             let idx = (j.flat*columns.double + i.flat)
             let z = flat[idx]
             let zz = reshape(z, shape: (r.n, c.n))
             return zz
         }
         set {
-            var (j, i) = meshgrid(r, y: c)
+            let (j, i) = meshgrid(r, y: c)
             let idx = j.flat*columns.double + i.flat
             flat[idx] = newValue.flat
         }

@@ -9,7 +9,7 @@
 import Foundation
 
 func svd(x: matrix2d) -> (matrix2d, matrix, matrix2d){
-    var (m, n) = x.shape
+    let (m, n) = x.shape
     let nS = m < n ? m : n // number singular values
     let sigma = zeros(nS)
     let vt = zeros((n,n))
@@ -33,13 +33,13 @@ func svd(x: matrix2d) -> (matrix2d, matrix, matrix2d){
 }
 func inv(x: matrix2d) -> matrix2d{
     assert(x.shape.0 == x.shape.1, "To take an inverse of a matrix, the matrix must be square. If you want the inverse of a rectangular matrix, use psuedoinverse.")
-    var y = zeros((x.shape.1, x.shape.0))
+    let y = zeros((x.shape.1, x.shape.0))
     copy(x.flat, y: y.flat)
     inv_objc(!y, x.shape.0.cint, x.shape.1.cint);
     return y
 }
 func solve(A: matrix2d, b: matrix) -> matrix{
-    var (m, n) = A.shape
+    let (m, n) = A.shape
     assert(b.n == m, "Ax = b, A.rows == b.n. Sizes must match which makes sense mathematically")
     assert(n == m, "Matrix must be square -- dictated by OpenCV")
     let x = zeros(n)
